@@ -2,22 +2,35 @@
 
 import { useEffect, useState } from 'react';
 import EventCard from '@/components/EventCard';
-import { Event } from '@/types/market';
+import MarketCard from '@/components/MarketCard';
+import { Event, Market } from '@/types/market';
 
 export default function Home() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchEvents() {
+    async function fetchData() {
       try {
-        const response = await fetch('https://api.oraculo.ar/api/curated/events');
-        if (!response.ok) {
-          throw new Error('Failed to fetch events');
+        // Fetch events and standalone markets in parallel
+        const [eventsResponse, marketsResponse] = await Promise.all([
+          fetch('https://api.oraculo.ar/api/curated/events'),
+          fetch('https://api.oraculo.ar/api/curated/markets')
+        ]);
+
+        if (!eventsResponse.ok || !marketsResponse.ok) {
+          throw new Error('Failed to fetch data');
         }
-        const data = await response.json();
-        setEvents(data.events);
+
+        const [eventsData, marketsData] = await Promise.all([
+          eventsResponse.json(),
+          marketsResponse.json()
+        ]);
+
+        setEvents(eventsData.events);
+        setMarkets(marketsData.markets);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error desconocido');
       } finally {
@@ -25,7 +38,7 @@ export default function Home() {
       }
     }
 
-    fetchEvents();
+    fetchData();
   }, []);
 
   return (
@@ -48,7 +61,7 @@ export default function Home() {
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             <p className="text-gray-600 dark:text-gray-400 text-lg mt-4">
-              Cargando eventos...
+              Cargando datos...
             </p>
           </div>
         ) : error ? (
@@ -57,18 +70,45 @@ export default function Home() {
               Error: {error}
             </p>
           </div>
-        ) : events.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
-              No hay eventos disponibles en este momento.
-            </p>
-          </div>
         ) : (
-          <div className="space-y-8">
-            {events.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
+          <>
+            {/* Standalone Markets Section */}
+            {markets.length > 0 && (
+              <section className="mb-12">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Mercados Destacados
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {markets.map((market) => (
+                    <MarketCard key={market.id} market={market} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Events Section */}
+            {events.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Eventos
+                </h2>
+                <div className="space-y-8">
+                  {events.map((event) => (
+                    <EventCard key={event.id} event={event} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Empty state */}
+            {events.length === 0 && markets.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-600 dark:text-gray-400 text-lg">
+                  No hay datos disponibles en este momento.
+                </p>
+              </div>
+            )}
+          </>
         )}
       </main>
 
