@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import EventCard from '@/components/EventCard';
 import MarketCard from '@/components/MarketCard';
+import Hero from '@/components/Hero';
 import { Event, Market } from '@/types/market';
 
 export default function Home() {
@@ -10,6 +11,14 @@ export default function Home() {
   const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Calculate total volume
+  const totalVolume = markets.reduce((sum, market) => sum + parseFloat(market.volume), 0);
+  const formatVolume = (volume: number) => {
+    if (volume >= 1000000) return `$${(volume / 1000000).toFixed(1)}M`;
+    if (volume >= 1000) return `$${(volume / 1000).toFixed(0)}K`;
+    return `$${volume.toFixed(0)}`;
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -43,28 +52,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-800 dark:to-blue-900 shadow-lg sticky top-0 z-10 border-b-4 border-blue-400 dark:border-blue-600">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <h1 className="text-4xl font-extrabold text-white mb-2 tracking-tight">
-                Oráculo.ar
-              </h1>
-              <p className="text-blue-100 dark:text-blue-200 text-lg">
-                Mercados Predictivos de Argentina
-              </p>
-            </div>
-            <div className="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-white text-sm font-medium">En vivo</span>
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Hero Section */}
+      <Hero
+        totalMarkets={markets.length + events.reduce((sum, event) => sum + event.markets.length, 0)}
+        totalVolume={formatVolume(totalVolume)}
+      />
 
       {/* Main content */}
-      <main className="container mx-auto px-4 py-8">
+      <main id="mercados" className="container mx-auto px-4 py-8">
         {loading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
