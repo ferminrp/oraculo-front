@@ -90,21 +90,16 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
 
   return (
     <>
-      <div className="h-full flex flex-col">
-        {/* Main clickable card area */}
-        <a
-          href={polymarketUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-5 border-2 border-gray-200 dark:border-gray-700 hover:-translate-y-1 flex items-center gap-4 flex-1 ${
-            isNoOutcome
-              ? 'hover:border-red-400 dark:hover:border-red-600'
-              : 'hover:border-emerald-400 dark:hover:border-emerald-600'
-          }`}
-        >
+      {/* Main clickable area */}
+      <a
+        href={polymarketUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group transition-all duration-300 py-3 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+      >
           {/* Icon */}
           {market.icon && (
-            <div className={`w-16 h-16 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 transition-all duration-300 ${
+            <div className={`w-12 h-12 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 transition-all duration-300 ${
               isNoOutcome
                 ? 'group-hover:ring-red-400 dark:group-hover:ring-red-600'
                 : 'group-hover:ring-emerald-400 dark:group-hover:ring-emerald-600'
@@ -119,7 +114,7 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
 
           {/* Title and Volume */}
           <div className="flex-1 min-w-0">
-            <h3 className={`text-base font-bold text-gray-900 dark:text-gray-100 mb-1 line-clamp-2 transition-colors duration-300 ${
+            <h3 className={`text-sm font-bold text-gray-900 dark:text-gray-100 mb-0.5 line-clamp-2 transition-colors duration-300 ${
               isNoOutcome
                 ? 'group-hover:text-red-600 dark:group-hover:text-red-400'
                 : 'group-hover:text-emerald-600 dark:group-hover:text-emerald-400'
@@ -135,11 +130,11 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
           {market.clobTokenIds && (
             <button
               onClick={handleChartClick}
-              className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-all duration-300"
+              className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-all duration-300"
               aria-label="Ver gráfico"
             >
               <svg
-                className="w-6 h-6 text-blue-500 dark:text-blue-400 hover:scale-110 transition-transform duration-300"
+                className="w-5 h-5 text-blue-500 dark:text-blue-400 hover:scale-110 transition-transform duration-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -149,16 +144,15 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
             </button>
           )}
 
-          {/* Highest Probability Badge */}
-          <div className={`flex-shrink-0 text-white px-4 py-2 rounded-lg font-bold text-lg group-hover:scale-105 transition-transform duration-300 ${
-            isNoOutcome
-              ? 'bg-red-500 dark:bg-red-600'
-              : 'bg-emerald-500 dark:bg-emerald-600'
-          }`}>
-            {maxProbability}% {maxOutcome}
-          </div>
-        </a>
-      </div>
+        {/* Highest Probability Badge */}
+        <div className={`flex-shrink-0 text-white px-3 py-1.5 rounded-lg font-bold text-base group-hover:scale-105 transition-transform duration-300 ${
+          isNoOutcome
+            ? 'bg-red-500 dark:bg-red-600'
+            : 'bg-emerald-500 dark:bg-emerald-600'
+        }`}>
+          {maxProbability}% {maxOutcome}
+        </div>
+      </a>
 
       {/* Chart Modal */}
       <MarketChartModal

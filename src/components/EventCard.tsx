@@ -104,11 +104,11 @@ export default function EventCard({ event }: EventCardProps) {
       </div>
 
       {/* Mercados del evento */}
-      <div className="p-4">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3">
+      <div className="px-4 pb-4">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 pt-4">
           Mercados
         </h3>
-        <div className="space-y-3">
+        <div className="divide-y divide-gray-200 dark:divide-gray-700">
           {event.markets.map((market) => (
             <MarketCard key={market.id} market={market} eventSlug={event.slug} />
           ))}
