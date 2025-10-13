@@ -1,0 +1,6 @@
+# robots.txt for oraculo.ar
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://oraculo.ar/sitemap.xml
