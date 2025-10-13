@@ -75,6 +75,9 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
   const maxOutcome = outcomes[maxPriceIndex];
   const maxProbability = (parseFloat(prices[maxPriceIndex]) * 100).toFixed(0);
 
+  // Determine if the outcome is "No" for styling
+  const isNoOutcome = maxOutcome?.toLowerCase() === 'no';
+
   const polymarketUrl = eventSlug
     ? `https://polymarket.com/event/${eventSlug}?tid=${market.id}&via=oraculo.ar`
     : `https://polymarket.com/event/${market.slug}?via=oraculo.ar`;
@@ -93,11 +96,19 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
           href={polymarketUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-5 border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-400 dark:hover:border-emerald-600 hover:-translate-y-1 flex items-center gap-4 flex-1"
+          className={`group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-5 border-2 border-gray-200 dark:border-gray-700 hover:-translate-y-1 flex items-center gap-4 flex-1 ${
+            isNoOutcome
+              ? 'hover:border-red-400 dark:hover:border-red-600'
+              : 'hover:border-emerald-400 dark:hover:border-emerald-600'
+          }`}
         >
           {/* Icon */}
           {market.icon && (
-            <div className="w-16 h-16 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-emerald-400 dark:group-hover:ring-emerald-600 transition-all duration-300">
+            <div className={`w-16 h-16 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 transition-all duration-300 ${
+              isNoOutcome
+                ? 'group-hover:ring-red-400 dark:group-hover:ring-red-600'
+                : 'group-hover:ring-emerald-400 dark:group-hover:ring-emerald-600'
+            }`}>
               <img
                 src={market.icon}
                 alt={market.question}
@@ -108,7 +119,11 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
 
           {/* Title and Volume */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-base font-bold text-gray-900 dark:text-gray-100 mb-1 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
+            <h3 className={`text-base font-bold text-gray-900 dark:text-gray-100 mb-1 line-clamp-2 transition-colors duration-300 ${
+              isNoOutcome
+                ? 'group-hover:text-red-600 dark:group-hover:text-red-400'
+                : 'group-hover:text-emerald-600 dark:group-hover:text-emerald-400'
+            }`}>
               {market.question}
             </h3>
             <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
@@ -135,7 +150,11 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
           )}
 
           {/* Highest Probability Badge */}
-          <div className="flex-shrink-0 bg-emerald-500 dark:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-lg group-hover:scale-105 transition-transform duration-300">
+          <div className={`flex-shrink-0 text-white px-4 py-2 rounded-lg font-bold text-lg group-hover:scale-105 transition-transform duration-300 ${
+            isNoOutcome
+              ? 'bg-red-500 dark:bg-red-600'
+              : 'bg-emerald-500 dark:bg-emerald-600'
+          }`}>
             {maxProbability}% {maxOutcome}
           </div>
         </a>
