@@ -47,9 +47,22 @@ export default function EventCard({ event }: EventCardProps) {
             )}
 
             <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-2 drop-shadow-lg">
-                {event.title}
-              </h2>
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <h2 className="text-2xl font-bold drop-shadow-lg flex-1">
+                  {event.title}
+                </h2>
+                <a
+                  href={`https://polymarket.com/event/${event.slug}?via=oraculo.ar`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white text-sm font-bold rounded-full border-2 border-white/30 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  Ver en Polymarket
+                </a>
+              </div>
               <div className="flex items-center gap-4 text-sm">
                 <span className="font-semibold">
                   Volumen total: {formatVolume(event.volume)}
@@ -90,7 +103,7 @@ export default function EventCard({ event }: EventCardProps) {
         </h3>
         <div className="space-y-4">
           {event.markets.map((market) => (
-            <MarketCard key={market.id} market={market} />
+            <MarketCard key={market.id} market={market} eventSlug={event.slug} />
           ))}
         </div>
       </div>

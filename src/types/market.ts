@@ -42,3 +42,12 @@ export interface EventsResponse {
 export interface MarketsResponse {
   markets: Market[];
 }
+
+export interface PricePoint {
+  t: number; // Unix timestamp
+  p: number; // Price
+}
+
+export interface PriceHistoryResponse {
+  history: PricePoint[];
+}

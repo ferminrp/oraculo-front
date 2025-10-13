@@ -44,14 +44,22 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Oráculo.ar - Mercados Predictivos de Argentina
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Eventos y mercados de predicción sobre Argentina
-          </p>
+      <header className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-800 dark:to-blue-900 shadow-lg sticky top-0 z-10 border-b-4 border-blue-400 dark:border-blue-600">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <h1 className="text-4xl font-extrabold text-white mb-2 tracking-tight">
+                Oráculo.ar
+              </h1>
+              <p className="text-blue-100 dark:text-blue-200 text-lg">
+                Mercados Predictivos de Argentina
+              </p>
+            </div>
+            <div className="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-white text-sm font-medium">En vivo</span>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -74,13 +82,23 @@ export default function Home() {
           <>
             {/* Standalone Markets Section */}
             {markets.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Mercados Destacados
-                </h2>
+              <section className="mb-12 animate-fadeIn">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-1 h-8 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full"></div>
+                  <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
+                    Mercados Destacados
+                  </h2>
+                  <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {markets.map((market) => (
-                    <MarketCard key={market.id} market={market} />
+                  {markets.map((market, index) => (
+                    <div
+                      key={market.id}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                      className="animate-slideUp"
+                    >
+                      <MarketCard market={market} />
+                    </div>
                   ))}
                 </div>
               </section>
@@ -113,19 +131,45 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12">
-        <div className="container mx-auto px-4 py-6 text-center text-gray-600 dark:text-gray-400">
-          <p>
-            Datos proporcionados por{' '}
-            <a
-              href="https://api.oraculo.ar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              Oráculo.ar API
-            </a>
-          </p>
+      <footer className="bg-gradient-to-r from-gray-800 to-gray-900 dark:from-gray-900 dark:to-black border-t-4 border-blue-500 mt-12">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-bold text-white mb-2">Oráculo.ar</h3>
+              <p className="text-gray-400 text-sm">
+                Mercados predictivos de Argentina en tiempo real
+              </p>
+            </div>
+            <div className="flex items-center gap-6">
+              <a
+                href="https://api.oraculo.ar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                API
+              </a>
+              <a
+                href="https://polymarket.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+                Polymarket
+              </a>
+            </div>
+          </div>
+          <div className="mt-6 pt-6 border-t border-gray-700 text-center">
+            <p className="text-gray-500 text-xs">
+              © 2025 Oráculo.ar - Datos proporcionados por Polymarket
+            </p>
+          </div>
         </div>
       </footer>
     </div>
