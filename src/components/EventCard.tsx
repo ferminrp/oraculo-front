@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Event } from '@/types/market';
 import MarketCard from './MarketCard';
 
@@ -6,6 +7,7 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const formatVolume = (volume: number) => {
     if (volume >= 1000000) return `$${(volume / 1000000).toFixed(2)}M`;
     if (volume >= 1000) return `$${(volume / 1000).toFixed(2)}K`;
@@ -84,11 +86,16 @@ export default function EventCard({ event }: EventCardProps) {
       {/* Descripción del evento */}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-          {event.description.split('\n').slice(0, 3).join('\n')}
+          {isDescriptionExpanded
+            ? event.description
+            : event.description.split('\n').slice(0, 3).join('\n')}
         </p>
         {event.description.split('\n').length > 3 && (
-          <button className="text-blue-600 dark:text-blue-400 hover:underline text-sm mt-2">
-            Ver más...
+          <button
+            onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+            className="text-blue-600 dark:text-blue-400 hover:underline text-sm mt-2 font-medium"
+          >
+            {isDescriptionExpanded ? 'Ver menos' : 'Ver más...'}
           </button>
         )}
         <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
