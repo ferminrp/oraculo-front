@@ -77,8 +77,8 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
   };
 
   return (
-    <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-600 hover:-translate-y-1">
-      <div className="flex items-start gap-3">
+    <div className="h-full group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-600 hover:-translate-y-1 flex flex-col">
+      <div className="flex items-start gap-3 flex-1">
         {market.icon && (
           <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-blue-400 dark:group-hover:ring-blue-600 transition-all duration-300">
             <img
@@ -89,7 +89,7 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
           </div>
         )}
 
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 flex flex-col">
           <h3 className="text-base font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
             {market.question}
           </h3>
@@ -122,6 +122,9 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
             <span className="font-medium">Vol: {formatVolume(market.volume)}</span>
             <span>{formatDate(market.endDate)}</span>
           </div>
+
+          {/* Spacer to push buttons to bottom */}
+          <div className="flex-1"></div>
 
           {/* Action buttons */}
           <div className="flex items-center gap-2 mb-2">

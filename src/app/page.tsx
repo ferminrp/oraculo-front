@@ -90,7 +90,7 @@ export default function Home() {
                     <div
                       key={market.id}
                       style={{ animationDelay: `${index * 100}ms` }}
-                      className="animate-slideUp"
+                      className="animate-slideUp h-full"
                     >
                       <MarketCard market={market} />
                     </div>
