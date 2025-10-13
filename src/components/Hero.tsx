@@ -51,12 +51,12 @@ export default function Hero({ totalMarkets = 0, totalVolume = '$0' }: HeroProps
               </svg>
             </a>
             <a
-              href="https://api.oraculo.ar"
+              href="https://polymarket.com?via=oraculo.ar"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-bold text-lg border-2 border-white/30 hover:bg-white/20 hover:scale-105 transition-all duration-300"
             >
-              Ver API
+              Ir a Polymarket
             </a>
           </div>
 
