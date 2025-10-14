@@ -109,9 +109,11 @@ export default function EventCard({ event }: EventCardProps) {
           Mercados
         </h3>
         <div className="divide-y divide-gray-200 dark:divide-gray-700">
-          {event.markets.map((market) => (
-            <MarketCard key={market.id} market={market} eventSlug={event.slug} />
-          ))}
+          {event.markets
+            .sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume))
+            .map((market) => (
+              <MarketCard key={market.id} market={market} eventSlug={event.slug} />
+            ))}
         </div>
       </div>
     </div>
