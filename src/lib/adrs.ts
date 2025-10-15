@@ -20,7 +20,7 @@ export async function getADRQuotes(): Promise<ADRQuote[]> {
 
     // Filtrar solo los símbolos que están en nuestra whitelist
     const filteredQuotes = allQuotes.filter(quote =>
-      WHITELISTED_ADRS.includes(quote.symbol as any)
+      (WHITELISTED_ADRS as readonly string[]).includes(quote.symbol)
     );
 
     // Ordenar por variación porcentual (de mayor a menor)
