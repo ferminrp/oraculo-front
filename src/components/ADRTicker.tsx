@@ -57,7 +57,7 @@ export default function ADRTicker() {
     <section className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 border-y border-gray-200 dark:border-gray-700 py-4 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="mb-3">
           <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
               <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
@@ -65,10 +65,6 @@ export default function ADRTicker() {
             </svg>
             ADRs Argentinas
           </h3>
-          <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span>En vivo</span>
-          </div>
         </div>
 
         {/* Ticker horizontal */}
@@ -143,17 +139,21 @@ export default function ADRTicker() {
           background: transparent;
         }
         .scrollbar-thin::-webkit-scrollbar-thumb {
-          background: #cbd5e0;
+          background: transparent;
           border-radius: 3px;
+          transition: background 0.2s;
         }
-        .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+        .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+          background: #cbd5e0;
+        }
+        .dark .scrollbar-thin:hover::-webkit-scrollbar-thumb {
           background: #4b5563;
         }
         .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: #a0aec0;
+          background: #a0aec0 !important;
         }
         .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: #6b7280;
+          background: #6b7280 !important;
         }
       `}</style>
     </section>
