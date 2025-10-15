@@ -38,15 +38,17 @@ This application is designed to incur **$0 in hosting costs**. All key architect
 Browser (Client Component)
     ↓
 Direct fetch to https://api.oraculo.ar/api/curated/events
+Direct fetch to https://data912.com/live/usa_adrs (for ADRs)
     ↓
-Event data with nested markets
+Event data with nested markets + ADR quotes
     ↓
-EventCard components → MarketCard components
+ADRTicker component (above markets) → EventCard components → MarketCard components
 ```
 
 - **API Endpoints**:
   - `/events` - Returns events with nested markets array
-  - `/markets` - Returns standalone markets (not currently used)
+  - `/markets` - Returns standalone markets
+  - `https://data912.com/live/usa_adrs` - Real-time ADR quotes (external API)
 
 - **Data Structure**:
   - Events group related markets under a theme
@@ -59,9 +61,21 @@ EventCard components → MarketCard components
 
 **Image Handling**: All images use standard `<img>` tags with full URLs from `polymarket-upload.s3.us-east-2.amazonaws.com`. Never use Next.js `<Image>` component as it triggers costly optimization.
 
-**Type Safety**: `src/types/market.ts` defines all API response types. Note that `outcomes` and `outcomePrices` are JSON string arrays, not native arrays.
+**Type Safety**:
+- `src/types/market.ts` defines all Polymarket API response types. Note that `outcomes` and `outcomePrices` are JSON string arrays, not native arrays.
+- `src/types/adr.ts` defines types for ADR quotes from data912.com API
 
-**API Integration**: Helper functions in `src/lib/api.ts` use plain `fetch()` with no caching options. All caching happens in the browser naturally.
+**API Integration**:
+- Helper functions in `src/lib/api.ts` use plain `fetch()` with no caching options for Polymarket data
+- `src/lib/adrs.ts` handles ADR quotes with automatic filtering by whitelist and sorting by price change
+- All caching happens in the browser naturally
+
+**ADR Component**:
+- `src/components/ADRTicker.tsx` displays real-time Argentine ADR prices
+- Auto-refreshes every 30 seconds (configurable in `src/config/adrs.ts`)
+- Whitelisted symbols configured in `src/config/adrs.ts` (CEPU, SUPV, BMA, PAM, EDN, GGAL, BBAR, VIST, YPF, IRS)
+- Uses logo.dev for company logos with fallback on error
+- Sorted by percentage change (highest to lowest)
 
 ## Critical Rules
 
