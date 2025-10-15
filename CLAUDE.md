@@ -39,16 +39,18 @@ Browser (Client Component)
     ↓
 Direct fetch to https://api.oraculo.ar/api/curated/events
 Direct fetch to https://data912.com/live/usa_adrs (for ADRs)
+Direct fetch to https://data912.com/live/arg_bonds (for bonds)
     ↓
-Event data with nested markets + ADR quotes
+Event data with nested markets + ADR quotes + Bond quotes
     ↓
-ADRTicker component (above markets) → EventCard components → MarketCard components
+ADRTicker → BondTicker → EventCard components → MarketCard components
 ```
 
 - **API Endpoints**:
   - `/events` - Returns events with nested markets array
   - `/markets` - Returns standalone markets
   - `https://data912.com/live/usa_adrs` - Real-time ADR quotes (external API)
+  - `https://data912.com/live/arg_bonds` - Real-time Argentine bond quotes (external API)
 
 - **Data Structure**:
   - Events group related markets under a theme
@@ -64,10 +66,12 @@ ADRTicker component (above markets) → EventCard components → MarketCard comp
 **Type Safety**:
 - `src/types/market.ts` defines all Polymarket API response types. Note that `outcomes` and `outcomePrices` are JSON string arrays, not native arrays.
 - `src/types/adr.ts` defines types for ADR quotes from data912.com API
+- `src/types/bond.ts` defines types for Argentine bond quotes from data912.com API
 
 **API Integration**:
 - Helper functions in `src/lib/api.ts` use plain `fetch()` with no caching options for Polymarket data
 - `src/lib/adrs.ts` handles ADR quotes with automatic filtering by whitelist and sorting by price change
+- `src/lib/bonds.ts` handles bond quotes with automatic filtering by whitelist and sorting by price change
 - All caching happens in the browser naturally
 
 **ADR Component**:
@@ -75,6 +79,13 @@ ADRTicker component (above markets) → EventCard components → MarketCard comp
 - Auto-refreshes every 30 seconds (configurable in `src/config/adrs.ts`)
 - Whitelisted symbols configured in `src/config/adrs.ts` (CEPU, SUPV, BMA, PAM, EDN, GGAL, BBAR, VIST, YPF, IRS)
 - Uses logo.dev for company logos with fallback on error
+- Sorted by percentage change (highest to lowest)
+
+**Bond Component**:
+- `src/components/BondTicker.tsx` displays real-time Argentine sovereign bond prices
+- Auto-refreshes every 30 seconds (configurable in `src/config/bonds.ts`)
+- Whitelisted symbols configured in `src/config/bonds.ts` (AL30D, AL29D, GD30D, AL35D, GD35D, AE38D)
+- Uses Argentine flag icon from Wikimedia Commons for all bonds
 - Sorted by percentage change (highest to lowest)
 
 ## Critical Rules

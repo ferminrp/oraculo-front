@@ -5,6 +5,7 @@ import EventCard from '@/components/EventCard';
 import MarketCard from '@/components/MarketCard';
 import Hero from '@/components/Hero';
 import ADRTicker from '@/components/ADRTicker';
+import BondTicker from '@/components/BondTicker';
 import { Event, Market } from '@/types/market';
 
 export default function Home() {
@@ -88,8 +89,13 @@ export default function Home() {
                 </div>
 
                 {/* ADR Ticker */}
-                <div className="mb-6">
+                <div className="mb-4">
                   <ADRTicker />
+                </div>
+
+                {/* Bond Ticker */}
+                <div className="mb-6">
+                  <BondTicker />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
