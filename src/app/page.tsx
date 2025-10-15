@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import EventCard from '@/components/EventCard';
 import MarketCard from '@/components/MarketCard';
 import Hero from '@/components/Hero';
+import ADRTicker from '@/components/ADRTicker';
 import { Event, Market } from '@/types/market';
 
 export default function Home() {
@@ -85,6 +86,12 @@ export default function Home() {
                   </h2>
                   <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>
                 </div>
+
+                {/* ADR Ticker */}
+                <div className="mb-6">
+                  <ADRTicker />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {markets.map((market, index) => (
                     <div
