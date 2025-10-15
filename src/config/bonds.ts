@@ -16,11 +16,11 @@ export type BondSymbol = typeof WHITELISTED_BONDS[number];
 export const BOND_NAMES: Record<BondSymbol, string> = {
   AL30D: 'Bono Argentina 2030',
   AL29D: 'Bono Argentina 2029',
-  GD30D: 'Global 2030',
+  GD30D: 'Bono Argentina 2030',
   AL35D: 'Bono Argentina 2035',
-  GD35D: 'Global 2035',
+  GD35D: 'Bono Argentina 2035',
   AE38D: 'Bono Argentina 2038',
-  GD41D: 'Global 2041',
+  GD41D: 'Bono Argentina 2041',
   AL41D: 'Bono Argentina 2041'
 };
 
