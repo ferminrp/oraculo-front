@@ -89,13 +89,8 @@ export default function Home() {
                 </div>
 
                 {/* ADR Ticker */}
-                <div className="mb-4">
-                  <ADRTicker />
-                </div>
-
-                {/* Bond Ticker */}
                 <div className="mb-6">
-                  <BondTicker />
+                  <ADRTicker />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -111,6 +106,11 @@ export default function Home() {
                 </div>
               </section>
             )}
+
+            {/* Bond Ticker Section - Below Polymarket Markets */}
+            <section className="mb-12">
+              <BondTicker />
+            </section>
 
             {/* Events Section */}
             {events.length > 0 && (
