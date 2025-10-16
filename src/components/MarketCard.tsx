@@ -13,9 +13,22 @@ interface PriceHistoryData {
   label: string;
 }
 
+// Helper function to parse outcomes/prices that can be either JSON array or comma-separated string
+function parseArrayField(field: string | undefined): string[] {
+  if (!field || typeof field !== 'string') return [];
+
+  try {
+    // Try parsing as JSON first (old format: '["Sí","No"]')
+    return JSON.parse(field) as string[];
+  } catch {
+    // If JSON parse fails, split by comma (new format: 'Sí,No')
+    return field.split(',').map(s => s.trim());
+  }
+}
+
 export default function MarketCard({ market, eventSlug }: MarketCardProps) {
-  const outcomes = market.outcomes ? JSON.parse(market.outcomes) as string[] : [];
-  const prices = market.outcomePrices ? JSON.parse(market.outcomePrices) as string[] : [];
+  const outcomes = parseArrayField(market.outcomes);
+  const prices = parseArrayField(market.outcomePrices);
   const [priceHistories, setPriceHistories] = useState<PriceHistoryData[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +41,7 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
 
       try {
         setLoadingHistory(true);
-        const clobTokenIds = JSON.parse(market.clobTokenIds) as string[];
+        const clobTokenIds = parseArrayField(market.clobTokenIds);
         if (clobTokenIds.length === 0) return;
 
         // Fetch price history for all outcomes in parallel
