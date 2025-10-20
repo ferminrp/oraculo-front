@@ -6,6 +6,7 @@ import MarketChartModal from './MarketChartModal';
 interface MarketCardProps {
   market: Market;
   eventSlug?: string; // Optional: if provided, link to the event with tid parameter
+  totalMarketsInEvent?: number; // Optional: if provided, show total markets count for events
 }
 
 interface PriceHistoryData {
@@ -26,7 +27,7 @@ function parseArrayField(field: string | undefined): string[] {
   }
 }
 
-export default function MarketCard({ market, eventSlug }: MarketCardProps) {
+export default function MarketCard({ market, eventSlug, totalMarketsInEvent }: MarketCardProps) {
   const outcomes = parseArrayField(market.outcomes);
   const prices = parseArrayField(market.outcomePrices);
   const [priceHistories, setPriceHistories] = useState<PriceHistoryData[]>([]);
@@ -147,6 +148,9 @@ export default function MarketCard({ market, eventSlug }: MarketCardProps) {
             </h3>
             <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
               {formatVolume(market.volume)}
+              {totalMarketsInEvent && totalMarketsInEvent > 1 && (
+                <span className="ml-2">• {totalMarketsInEvent} mercados</span>
+              )}
             </p>
           </div>
 

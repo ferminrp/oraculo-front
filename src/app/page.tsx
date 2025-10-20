@@ -14,14 +14,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Calculate total volume
-  const totalVolume = markets.reduce((sum, market) => sum + parseFloat(market.volume), 0);
-  const formatVolume = (volume: number) => {
-    if (volume >= 1000000) return `$${(volume / 1000000).toFixed(1)}M`;
-    if (volume >= 1000) return `$${(volume / 1000).toFixed(0)}K`;
-    return `$${volume.toFixed(0)}`;
-  };
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -55,10 +47,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <Hero
-        totalMarkets={markets.length + events.reduce((sum, event) => sum + event.markets.length, 0)}
-        totalVolume={formatVolume(totalVolume)}
-      />
+      <Hero />
 
       {/* Main content */}
       <main id="mercados" className="container mx-auto px-4 py-8">
@@ -115,12 +104,22 @@ export default function Home() {
             {/* Events Section */}
             {events.length > 0 && (
               <section>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Eventos
-                </h2>
-                <div className="space-y-8">
-                  {events.map((event) => (
-                    <EventCard key={event.id} event={event} />
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-1 h-8 bg-gradient-to-b from-purple-600 to-purple-400 rounded-full"></div>
+                  <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
+                    Eventos
+                  </h2>
+                  <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {events.map((event, index) => (
+                    <div
+                      key={event.id}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                      className="animate-slideUp h-full"
+                    >
+                      <EventCard event={event} />
+                    </div>
                   ))}
                 </div>
               </section>

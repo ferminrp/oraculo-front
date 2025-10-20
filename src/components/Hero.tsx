@@ -1,11 +1,6 @@
 'use client';
 
-interface HeroProps {
-  totalMarkets?: number;
-  totalVolume?: string;
-}
-
-export default function Hero({ totalMarkets = 0, totalVolume = '$0' }: HeroProps) {
+export default function Hero() {
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 dark:from-blue-900 dark:via-purple-900 dark:to-indigo-950">
       {/* Animated background pattern */}
@@ -60,25 +55,6 @@ export default function Hero({ totalMarkets = 0, totalVolume = '$0' }: HeroProps
             </a>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto animate-fade-in-up-delay-3">
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-black text-white mb-2">{totalMarkets}</div>
-              <div className="text-blue-100 text-sm font-medium">Mercados Activos</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-black text-white mb-2">{totalVolume}</div>
-              <div className="text-blue-100 text-sm font-medium">Volumen Total</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-black text-white mb-2">24/7</div>
-              <div className="text-blue-100 text-sm font-medium">En Vivo</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-black text-white mb-2">🇦🇷</div>
-              <div className="text-blue-100 text-sm font-medium">Argentina</div>
-            </div>
-          </div>
         </div>
       </div>
 
