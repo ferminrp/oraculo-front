@@ -66,23 +66,24 @@ export default function Home() {
           </div>
         ) : (
           <>
-            {/* Standalone Markets Section */}
-            {markets.length > 0 && (
+            {/* ADR Ticker */}
+            <div className="mb-6">
+              <ADRTicker />
+            </div>
+
+            {/* Combined Markets Section */}
+            {(markets.length > 0 || events.length > 0) && (
               <section className="mb-12 animate-fadeIn">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full"></div>
                   <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
-                    Mercados Destacados
+                    Mercados
                   </h2>
                   <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>
                 </div>
 
-                {/* ADR Ticker */}
-                <div className="mb-6">
-                  <ADRTicker />
-                </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Standalone Markets */}
                   {markets.map((market, index) => (
                     <div
                       key={market.id}
@@ -92,30 +93,12 @@ export default function Home() {
                       <MarketCard market={market} />
                     </div>
                   ))}
-                </div>
-              </section>
-            )}
 
-            {/* Bond Ticker Section - Below Polymarket Markets */}
-            <section className="mb-12">
-              <BondTicker />
-            </section>
-
-            {/* Events Section */}
-            {events.length > 0 && (
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-1 h-8 bg-gradient-to-b from-purple-600 to-purple-400 rounded-full"></div>
-                  <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
-                    Eventos
-                  </h2>
-                  <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Event Markets */}
                   {events.map((event, index) => (
                     <div
                       key={event.id}
-                      style={{ animationDelay: `${index * 100}ms` }}
+                      style={{ animationDelay: `${(markets.length + index) * 100}ms` }}
                       className="animate-slideUp h-full"
                     >
                       <EventCard event={event} />
@@ -124,6 +107,11 @@ export default function Home() {
                 </div>
               </section>
             )}
+
+            {/* Bond Ticker Section */}
+            <section className="mb-12">
+              <BondTicker />
+            </section>
 
             {/* Empty state */}
             {events.length === 0 && markets.length === 0 && (
