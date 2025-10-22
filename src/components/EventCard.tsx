@@ -10,9 +10,15 @@ interface EventCardProps {
 export default function EventCard({ event }: EventCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Helper function to parse outcomes/prices that can be either JSON array or comma-separated string
-  const parseArrayField = (field: string | undefined): string[] => {
-    if (!field || typeof field !== 'string') return [];
+  // Helper function to parse outcomes/prices that can be either JSON array or comma-separated string or native array
+  const parseArrayField = (field: string | string[] | undefined): string[] => {
+    if (!field) return [];
+
+    // If it's already an array, return it directly
+    if (Array.isArray(field)) return field;
+
+    // If it's not a string, return empty array
+    if (typeof field !== 'string') return [];
 
     try {
       // Try parsing as JSON first (old format: '["Sí","No"]')

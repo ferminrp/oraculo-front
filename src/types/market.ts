@@ -7,8 +7,8 @@ export interface Market {
   image?: string;
   icon?: string;
   description: string;
-  outcomes?: string; // JSON string array
-  outcomePrices?: string; // JSON string array
+  outcomes?: string | string[]; // JSON string array, comma-separated string, or native array
+  outcomePrices?: string | string[]; // JSON string array, comma-separated string, or native array
   volume: string;
   active: boolean;
   closed: boolean;

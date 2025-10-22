@@ -18,9 +18,15 @@ interface PriceHistoryData {
   label: string;
 }
 
-// Helper function to parse outcomes/prices
-function parseArrayField(field: string | undefined): string[] {
-  if (!field || typeof field !== 'string') return [];
+// Helper function to parse outcomes/prices that can be either JSON array or comma-separated string or native array
+function parseArrayField(field: string | string[] | undefined): string[] {
+  if (!field) return [];
+
+  // If it's already an array, return it directly
+  if (Array.isArray(field)) return field;
+
+  // If it's not a string, return empty array
+  if (typeof field !== 'string') return [];
 
   try {
     return JSON.parse(field) as string[];
