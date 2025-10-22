@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Event, Market, PricePoint } from '@/types/market';
+import { Event, PricePoint } from '@/types/market';
 import { getPriceHistory } from '@/lib/api';
 import Sparkline from './Sparkline';
 import MarketCard from './MarketCard';
@@ -233,7 +233,7 @@ export default function EventChartModal({
                 />
               </svg>
               <p className="text-gray-500 dark:text-gray-400 text-center">
-                No hay mercados con outcome "YES" en este evento
+                No hay mercados con outcome &quot;YES&quot; en este evento
               </p>
             </div>
           )}
